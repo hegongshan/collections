@@ -2,6 +2,12 @@ package com.hegongshan.collections;
 
 import java.util.Arrays;
 
+/**
+ * 顺序栈
+ * @author hegongshan
+ *
+ * @param <E>
+ */
 public class ArrayStack<E> implements Stack<E> {
 	
 	private static int DEFAULT_CAPACITY = 10;

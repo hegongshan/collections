@@ -1,19 +1,14 @@
 package com.hegongshan.collections;
 
-/**
- * 链栈
- * @author hegongshan
- *
- * @param <E>
- */
-public class LinkedStack<E> implements Stack<E> {
+public class LinkedQueue<E> implements Queue<E>{
 
-	private Node<E> peek;
-	private int size;
-
+	private Node<E> first;//队首
+	private Node<E> last;//队尾
+	private int size = 0;
+	
 	@Override
 	public boolean isEmpty() {
-		return peek == null;
+		return last == null;
 	}
 
 	@Override
@@ -22,40 +17,32 @@ public class LinkedStack<E> implements Stack<E> {
 	}
 
 	@Override
-	public void push(E e) {
-		Node<E> x = new Node<E>(e, null);
-		if (peek == null) {
-			peek = x;
+	public void enqueue(E e) {
+		Node<E> x = new Node<E>(e,null);
+		if(last == null) {
+			first = last = x; 
 		} else {
-			x.next = peek;
-			peek = x;
+			last.next = x;
+			last = x;
 		}
 		size++;
 	}
 
 	@Override
-	public E pop() {
-		if (peek == null) {
+	public E dequeue() {
+		if(first == null) {
 			throw new NullPointerException();
 		}
-		Node<E> x = peek;
-		peek = peek.next;
+		Node<E> x = first;
+		first = first.next;
 		size--;
 		return x.data;
 	}
 
 	@Override
-	public E peek() {
-		if (peek == null) {
-			throw new NullPointerException();
-		}
-		return peek.data;
-	}
-
-	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("LinkedStack [");
-		Node<E> x = peek;
+		StringBuilder sb = new StringBuilder("LinkedQueue [");
+		Node<E> x = first;
 		while (x != null) {
 			if (x.next == null) {
 				sb.append(x.data);
