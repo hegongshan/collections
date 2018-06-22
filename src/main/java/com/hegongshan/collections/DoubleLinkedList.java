@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * @author hegongshan https://www.hegongshan.com
  * @param <E>
  */
-public class DoubleLinkedList<E> {
+public class DoubleLinkedList<E> extends LinkedList<E> {
 	private int size = 0;
 	private Node<E> first;
 	private Node<E> last;
@@ -26,20 +26,24 @@ public class DoubleLinkedList<E> {
 	public DoubleLinkedList(){
 		
 	}
-	
+
+	@Override
 	public int size() {
 		return size;
 	}
-	
+
+	@Override
 	public boolean isEmpty() {
 		return first == null;
 	}
-	
+
+	@Override
 	public boolean add(E e) {
 		linkLast(e);
 		return true;
 	}
-	
+
+	@Override
 	public void add(int index,E e) {
 		checkPositionIndex(index);
 		if(index == size) {
@@ -48,12 +52,14 @@ public class DoubleLinkedList<E> {
 			linkBefore(e,node(index));
 		}
 	}
-	
+
+	@Override
 	public E get(int index) {
 		checkElementIndex(index);
 		return node(index).data;
 	}
-	
+
+	@Override
 	public E getFirst() {
 		if(first == null) {
 			throw new NoSuchElementException();
@@ -67,7 +73,8 @@ public class DoubleLinkedList<E> {
 		}
 		return last.data;
 	}
-	
+
+	@Override
 	public E set(int index,E e) {
 		checkElementIndex(index);
 		Node<E> node = node(index);
@@ -75,7 +82,8 @@ public class DoubleLinkedList<E> {
 		node.data = e;
 		return oldValue;
 	}
-	
+
+	@Override
 	public E remove(int index) {
 		checkElementIndex(index);
 		Node<E> node = node(index);
@@ -88,7 +96,7 @@ public class DoubleLinkedList<E> {
 		size--;
 		return e;
 	}
-	
+
 	public E removeFirst() {
 		if(first == null) {
 			throw new NoSuchElementException();
@@ -124,7 +132,8 @@ public class DoubleLinkedList<E> {
 		size--;
 		return e;
 	}
-	
+
+	@Override
 	public void clear() {
 		
 		for(Node<E> node = first;node != null;) {
@@ -137,17 +146,20 @@ public class DoubleLinkedList<E> {
 		first = last = null;
 		size = 0;
 	}
-	
+
+	@Override
 	public void reverse() {
 		Node<E> temp = first;
 		first = last;
 		last = temp;
 	}
-	
+
+	@Override
 	public boolean contains(Object obj) {
 		return indexOf(obj) != -1;
 	}
-	
+
+	@Override
 	public int indexOf(Object obj) {
 		int index = 0;
 		if(obj == null) {
@@ -167,7 +179,8 @@ public class DoubleLinkedList<E> {
 		}
 		return -1;
 	}
-	
+
+	@Override
 	public int lastIndexOf(Object obj) {
 		int index = size - 1;
 		if(obj == null) {
@@ -187,24 +200,26 @@ public class DoubleLinkedList<E> {
 		}
 		return -1;
 	}
-	
+
+	@Override
 	public void linkFirst(E e) {
-		Node<E> node = new Node<>(null,e,first);
+		Node<E> node = new Node<E>(null,e,first);
 		first.prev = node;
 		first = node;
 		size++;
 	}
 	
 	private void linkBefore(E e,Node<E> node) {
-		Node<E> newNode = new Node<>(node.prev,e,node);
+		Node<E> newNode = new Node<E>(node.prev,e,node);
 		node.prev.next = newNode;
 		node.prev = newNode;
 		size++;
 	}
-	
+
+	@Override
 	public void linkLast(E e) {
 		if(size == 0) {
-			first = new Node<>(null,e,null);
+			first = new Node<E>(null,e,null);
 			last = first;
 			size++;
 			return ;
@@ -229,19 +244,6 @@ public class DoubleLinkedList<E> {
 				node = node.prev;
 			}
 			return node;
-		}
-	}
-	
-	private void checkElementIndex(int index) {
-		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException("index:" + index + ",size:" + size);
-		}
-	}
-
-	// 可以添加结点的位置，索引从0开始到size
-	private void checkPositionIndex(int index) {
-		if (index < 0 || index > size) {
-			throw new IndexOutOfBoundsException("index:" + index + ",size:" + size);
 		}
 	}
 }

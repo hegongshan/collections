@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * @author hegongshan https://www.hegongshan.com
  * @param <E>
  */
-public class SingleLinkedList<E> {
+public class SingleLinkedList<E> extends LinkedList<E>{
 
 	private int size = 0;
 	private Node<E> first;
@@ -16,15 +16,18 @@ public class SingleLinkedList<E> {
 	}
 
 	// 单链表中元素个数
+	@Override
 	public int size() {
 		return size;
 	}
 
 	// 判断单链表是否为空
+	@Override
 	public boolean isEmpty() {
 		return first == null;
 	}
 
+	@Override
 	public boolean contains(Object obj) {
 		return indexOf(obj) != -1;
 	}
@@ -47,12 +50,14 @@ public class SingleLinkedList<E> {
 		return (T[]) toArray();
 	}
 
+	@Override
 	public boolean add(E e) {
 		linkLast(e);
 		return true;
 	}
 
 	// 在单链表尾部插入新的结点
+	@Override
 	public void linkLast(E e) {
 		if (!isEmpty()) {
 			Node<E> newNode = new Node<>(e, null);
@@ -68,6 +73,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 在单链表头部插入新的数据
+	@Override
 	public void linkFirst(E e) {
 		Node<E> newNode = new Node<>(e, first);
 		first = newNode;
@@ -75,6 +81,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 清空单链表
+	@Override
 	public void clear() {
 		for (Node<E> node = first; node != null;) {
 			Node<E> next = node.next;
@@ -86,11 +93,13 @@ public class SingleLinkedList<E> {
 		size = 0;
 	}
 
+	@Override
 	public E get(int index) {
 		checkElementIndex(index);
 		return node(index).data;
 	}
-	
+
+	@Override
 	public E getFirst() {
 		if(first == null) {
 			throw new NoSuchElementException();
@@ -99,6 +108,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 把索引号为index的结点的数据改为element，并返回原来的结点数据
+	@Override
 	public E set(int index, E element) {
 		checkElementIndex(index);
 		Node<E> node = node(index);
@@ -125,6 +135,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 删除指定索引的结点，并返回该结点的数据值
+	@Override
 	public E remove(int index) {
 		checkElementIndex(index);
 		Node<E> node = first;
@@ -138,8 +149,9 @@ public class SingleLinkedList<E> {
 		removeNode.next = null;
 		return e;
 	}
-	
+
 	//反转单链表pre->p->next
+	@Override
 	public void reverse() {
 		Node<E> pre = first;
 		Node<E> p = first.next;
@@ -155,6 +167,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 给定数据在单链表中首次出现的位置
+	@Override
 	public int indexOf(Object obj) {
 		int index = 0;
 		if (obj == null) {
@@ -176,6 +189,7 @@ public class SingleLinkedList<E> {
 	}
 
 	// 给定数据在单链表中最后一次出现的位置
+	@Override
 	public int lastIndexOf(Object obj) {
 		int index = 0;
 		int i = 0;
@@ -253,20 +267,6 @@ public class SingleLinkedList<E> {
 		Node(E data, Node<E> next) {
 			this.data = data;
 			this.next = next;
-		}
-	}
-
-	// 单链表中的结点索引从0开始到size-1
-	private void checkElementIndex(int index) {
-		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException("index:" + index + ",size:" + size);
-		}
-	}
-
-	// 可以添加结点的位置，索引从0开始到size
-	private void checkPositionIndex(int index) {
-		if (index < 0 || index > size) {
-			throw new IndexOutOfBoundsException("index:" + index + ",size:" + size);
 		}
 	}
 

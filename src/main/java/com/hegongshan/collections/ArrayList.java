@@ -5,7 +5,7 @@ package com.hegongshan.collections;
  * @author hegongshan https://www.hegongshan.com
  * @param <E>
  */
-public class ArrayList<E> {
+public class ArrayList<E> implements List<E>{
 
 	private static final int DEFAULT_CAPACITY = 10;
 
@@ -25,16 +25,19 @@ public class ArrayList<E> {
 	}
 
 	// 返回顺序表中的元素个数
+	@Override
 	public int size() {
 		return size;
 	}
 
 	// 是否为空
+	@Override
 	public boolean isEmpty() {
 		return size == 0;
 	}
 
 	// 添加元素
+	@Override
 	public boolean add(E e) {
 		ensureCapacity();
 		elementData[size] = e;
@@ -43,6 +46,7 @@ public class ArrayList<E> {
 	}
 
 	// 根据索引号添加元素
+	@Override
 	public void add(int index, E e) {
 		checkPositionIndex(index);
 		ensureCapacity();
@@ -55,6 +59,7 @@ public class ArrayList<E> {
 
 	// 删除指定索引处的元素
 	@SuppressWarnings("unchecked")
+	@Override
 	public E remove(int index) {
 		checkElementIndex(index);
 		E oldValue = (E) elementData[index];
@@ -66,6 +71,7 @@ public class ArrayList<E> {
 	}
 
 	// 删除指定元素值首次出现的那个元素
+	@Override
 	public boolean remove(Object obj) {
 		int index = indexOf(obj);
 		if (index != -1) {
@@ -76,6 +82,7 @@ public class ArrayList<E> {
 	}
 
 	// 根据索引号获取元素
+	@Override
 	@SuppressWarnings("unchecked")
 	public E get(int index) {
 		checkElementIndex(index);
@@ -83,11 +90,16 @@ public class ArrayList<E> {
 	}
 
 	// 改变指定索引号的元素值
-	public void set(int index, E e) {
+	@SuppressWarnings("unchecked")
+	@Override
+	public E set(int index, E e) {
 		checkElementIndex(index);
+		E oldValue = (E) elementData[index];
 		elementData[index] = e;
+		return oldValue;
 	}
 
+	@Override
 	public void clear() {
 		for (int i = 0; i < size; i++) {
 			elementData[i] = null;
@@ -110,11 +122,13 @@ public class ArrayList<E> {
 	}
 
 	// 是否包含某一元素
+	@Override
 	public boolean contains(Object obj) {
 		return indexOf(obj) != -1;
 	}
 
 	// 某一元素首次出现的位置
+	@Override
 	public int indexOf(Object obj) {
 		if (obj == null) {
 			for (int i = 0; i < size; i++) {
@@ -133,6 +147,7 @@ public class ArrayList<E> {
 	}
 
 	// 某一元素最后一次出现的位置
+	@Override
 	public int lastIndexOf(Object obj) {
 		if (obj == null) {
 			for (int i = size - 1; i >= 0; i--) {
